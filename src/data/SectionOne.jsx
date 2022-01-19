@@ -1,5 +1,6 @@
 export const SectionOne = [
   {
+    id: Math.floor(Math.random() * 10000),
     src: "https://cdn.shopify.com/s/files/1/0046/1615/9347/files/img-2-1_768X_7189c801-3259-4f38-89ed-011923d281fd_970x.jpg?v=1631683867",
     alt: "pizza 1st section",
     imgClass: "pizza-1st-section",

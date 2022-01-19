@@ -12,7 +12,7 @@ import { SectionOne } from "../data/SectionOne";
 import { SectionTwo } from "../data/SectionTwo";
 import Footer from "../components/Footer";
 import "./Home.css";
-const Home = props => {
+const Home = () => {
   const itemList = useSelector(state => state.items);
   const cart = useSelector(state => state.cart);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -109,14 +109,11 @@ const Home = props => {
           triggerDelete={onItemDeleteInCart}
         />
       )}
-      {/* <div>
-        <img src={Burger} alt="" />
-      </div> */}
       <div>
         <Carousel>
           {CarouselData.map((item, index) => {
             return (
-              <Carousel.Item key={index}>
+              <Carousel.Item key={index.id}>
                 <div className={item.img_container}>
                   <img
                     className={item.className}
@@ -124,7 +121,7 @@ const Home = props => {
                     alt={item.alt}
                   />
                 </div>
-                <Carousel.Caption className={item.caption_cName}>
+                <Carousel.Caption key={index.id} className={item.caption_cName}>
                   <p className={item.p1_cName}>{item.p1}</p>
                   <h2 className={item.h2_cName}>{item.h2}</h2>
                   <h3 className={item.h3_cName}>{item.h3}</h3>
@@ -138,11 +135,11 @@ const Home = props => {
         </Carousel>
       </div>
       <div className="section-one">
-        {SectionOne.map(d => {
+        {SectionOne.map((d, index) => {
           return (
             <>
               <img src={d.src} alt={d.alt} className={d.imgClass} />
-              <span className={d.spanClass}>
+              <span key={index.id} className={d.spanClass}>
                 <h2>{d.h2_data}</h2>
                 <p>{d.p_data}</p>
                 <button>{d.btn_data}</button>
@@ -153,26 +150,16 @@ const Home = props => {
       </div>
       <div className="section-two">
         <span className="section-2-span">
-          {SectionTwo.map(d => {
-            return <img className={d.cName} src={d.url} alt={d.alt} />;
+          {SectionTwo.map((d, index) => {
+            return (
+              <img key={index.id} className={d.cName} src={d.url} alt={d.alt} />
+            );
           })}
         </span>
       </div>
       <div className="products-section">
         <h2 className="our-products">Our Pizzas</h2>
         <ItemSelect selectCategory={setSelectedCategory} />
-
-        {/* {ProductSectionData.map(d => {
-            return (
-              <>
-                <div className={d.cName}>
-                  <img src={d.url} alt={d.alt} className={d.imgClass} />
-                  <span></span>
-                  <span></span>
-                </div>
-              </>
-            );
-          })} */}
         <div className="card-main-container">
           {itemList
             .filter(item => {
@@ -181,9 +168,10 @@ const Home = props => {
               }
               return item.category === selectedCategory;
             })
-            .map(item => {
+            .map((item, index) => {
               return (
                 <Item
+                  key={index.id}
                   itemData={item}
                   triggerOrder={onAddToCart}
                   triggerEdit={onItemEdit}
@@ -227,7 +215,6 @@ const Home = props => {
           })}
       </div> */}
       {/* DONT DELETE, THIS IS THE MAIN FUNCTIONALITY  - END OF LINE*/}
-      <Footer />
     </React.Fragment>
   );
 };

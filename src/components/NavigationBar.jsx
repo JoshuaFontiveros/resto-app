@@ -110,7 +110,7 @@ const NavigationBar = props => {
           <div className="cart-and-add-product-logo-container">
             <div className="cart-logo ">
               {/* <span>Home</span> */}
-              <span>All Products</span>
+              <span className="all-products">All Products</span>
               <div className="cart-counter-container">
                 <span className="counter">
                   {cart.length > 0 ? cart.length : null}
@@ -145,8 +145,8 @@ const NavigationBar = props => {
                     </thead>
                     <tbody>
                       {cart.length > 0 && cart ? (
-                        cart.map(cartItem2 => (
-                          <tr key={cartItem2.id}>
+                        cart.map((cartItem2, index) => (
+                          <tr key={index}>
                             <td>{cartItem2.name}</td>
                             <td>
                               <button onClick={onTriggerOrder}>+</button>
