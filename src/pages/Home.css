@@ -1,0 +1,143 @@
+.outline-black-1 {
+  outline: 2px solid black;
+}
+@media (min-width: 325px) {
+  .img-container {
+    background-color: black;
+  }
+
+  .carousel-images-1,
+  .carousel-images-2,
+  .carousel-images-3 {
+    width: 100vw;
+    height: 38vh;
+    opacity: 0.3;
+  }
+
+  .h2,
+  .h3,
+  .h4,
+  .h5 {
+    text-transform: uppercase;
+  }
+
+  .h2 {
+    color: red;
+    font-weight: bold;
+  }
+  .h3 {
+    color: yellow;
+  }
+  .h5 {
+    color: red;
+  }
+
+  .carousel-btn {
+    background-color: black;
+    border-radius: 20px;
+    width: 60%;
+    border: 2px solid yellow;
+    color: white;
+  }
+
+  .section-one {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(247, 247, 247);
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+
+  .section-one-description {
+    background-color: rgb(247, 247, 247);
+    width: 100vw;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .section-one-description button {
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    border: 3px solid yellow;
+  }
+
+  .section-two {
+    margin-top: 10px;
+  }
+
+  .section-2-span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .section-two-image {
+    width: 90vw;
+    margin-top: 40px;
+    border: 10px solid rgb(254, 197, 36);
+  }
+  .products-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    background-color: #fefefe;
+  }
+
+  .img-background {
+    opacity: 0.2;
+    position: absolute;
+    width: 100vw;
+  }
+  .our-products {
+    margin-top: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pizza-1st-section {
+    width: 50vw;
+  }
+
+  .section-one {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(247, 247, 247);
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+  .section-one-description {
+    background-color: rgb(247, 247, 247);
+    width: 50vw;
+    text-align: center;
+    padding-top: 20px;
+    margin-right: 50px;
+  }
+  .carousel-images-1,
+  .carousel-images-2,
+  .carousel-images-3 {
+    width: 100vw;
+    height: 80vh;
+    opacity: 0.3;
+  }
+
+  .carousel-caption {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}
