@@ -7,14 +7,7 @@ import "./NavigationBar.css";
 import { IconContext } from "react-icons";
 import { SidebarData } from "../data/SidebarData";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  OverlayTrigger,
-  Popover,
-  Table,
-  Modal,
-  Button,
-  Offcanvas,
-} from "react-bootstrap";
+import { Table, Modal, Offcanvas } from "react-bootstrap";
 import Form from "./Form";
 
 const NavigationBar = props => {
@@ -35,7 +28,7 @@ const NavigationBar = props => {
   // states from our reducer
   const itemList = useSelector(state => state.items);
   const cart = useSelector(state => state.cart);
-  const total = useSelector(state => state.total);
+  // const total = useSelector(state => state.total);
 
   useEffect(() => {
     let subtotalHolder = 0;
@@ -44,7 +37,7 @@ const NavigationBar = props => {
         (subtotalHolder += cartSubtotal.quantity * cartSubtotal.price)
     );
     setSubTotal(subtotalHolder);
-  });
+  }, [cart]);
   /* add new product */
   function addNewProduct(item) {
     let addedProduct = [...itemList, item];
@@ -67,29 +60,29 @@ const NavigationBar = props => {
     // setToUpdateItem(null);
   }
 
-  function addAnotherOneItem(cartItem2) {
-    alert(`You have added to cart: ${cartItem2.name}`);
-    /* Logic
-      1. Check if item exist
-        - if it does, increase quantity
-        - add item to cart with quantity = 1
-    */
-    // if (cart.find(cartItem2 => cartItem2.id === cartItem.id)) {
-    //   // increase quantity
-    //   let updatedCart = cart.map(cartItem2 => {
-    //     if (cartItem2.id === cartItem.id) {
-    //       cartItem2.quantity += 1;
-    //     }
-    //     return cartItem2;
-    //   });
-    //   // setCart(updatedCart);
-    //   dispatch({ type: "ADD_TO_CART", payload: updatedCart });
-    // } else {
-    //   // add item to cart
-    //   let newAddCart = [...cart, { ...cartItem, quantity: 1 }];
-    //   dispatch({ type: "ADD_TO_CART", payload: newAddCart });
-    // }
-  }
+  // function addAnotherOneItem(cartItem2) {
+  //   alert(`You have added to cart: ${cartItem2.name}`);
+  //   /* Logic
+  //     1. Check if item exist
+  //       - if it does, increase quantity
+  //       - add item to cart with quantity = 1
+  //   */
+  //   // if (cart.find(cartItem2 => cartItem2.id === cartItem.id)) {
+  //   //   // increase quantity
+  //   //   let updatedCart = cart.map(cartItem2 => {
+  //   //     if (cartItem2.id === cartItem.id) {
+  //   //       cartItem2.quantity += 1;
+  //   //     }
+  //   //     return cartItem2;
+  //   //   });
+  //   //   // setCart(updatedCart);
+  //   //   dispatch({ type: "ADD_TO_CART", payload: updatedCart });
+  //   // } else {
+  //   //   // add item to cart
+  //   //   let newAddCart = [...cart, { ...cartItem, quantity: 1 }];
+  //   //   dispatch({ type: "ADD_TO_CART", payload: newAddCart });
+  //   // }
+  // }
   function onTriggerOrder() {
     props.triggerOrder(props.itemData);
   }

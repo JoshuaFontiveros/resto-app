@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+
 import Item from "../components/Item";
-import Form from "../components/Form";
+
 import ItemSelect from "../components/ItemSelect";
-import * as FaIcons from "react-icons/fa";
+
 import NavigationBar from "../components/NavigationBar";
-import { Container, Carousel, Button } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { CarouselData } from "../data/CarouselData";
 import { SectionOne } from "../data/SectionOne";
 import { SectionTwo } from "../data/SectionTwo";
@@ -16,25 +16,24 @@ const Home = props => {
   const itemList = useSelector(state => state.items);
   const cart = useSelector(state => state.cart);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const total = useSelector(state => state.total);
-  const toUpdateItem = useSelector(state => state.toUpdateItem);
+  // const total = useSelector(state => state.total);
+  // const toUpdateItem = useSelector(state => state.toUpdateItem);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   // const [selectCategory, setSelectCategory] = useState("All");
   // const [cart, setCart] = useState([]);
   // const [total, setTotal] = useState(0);
-  const [toUpdateItemState, setToUpdateItemState] = useState(null);
+  // const [toUpdateItemState, setToUpdateItemState] = useState(null);
 
-  let map2 = new Map();
   useEffect(() => {
-    if (itemList) {
-      setLoading(true);
-    }
+    // if (itemList) {
+    //   setLoading(true);
+    // }
     let subtotal = 0;
     cart.map(cartItem => (subtotal += cartItem.quantity * cartItem.price));
     // setTotal(subtotal);
     dispatch({ type: "TOTAL", payload: subtotal });
-  }, [cart]);
+  }, [cart, dispatch]);
 
   function onItemDelete(id) {
     let deleteItems = itemList.filter(d => id !== d.id);
@@ -55,7 +54,7 @@ const Home = props => {
   function onItemEdit(id) {
     let itemEdit = itemList.find(item => item.id === id);
     dispatch({ type: "ITEM_EDIT", payload: itemEdit });
-    setToUpdateItemState(itemList.find(item => item.id === id));
+    // setToUpdateItemState(itemList.find(item => item.id === id));
   }
 
   function onAddToCart(item) {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Item.css";
-import { useDispatch } from "react-redux";
 import * as FaIcons from "react-icons/fa";
 import { Modal, Button } from "react-bootstrap";
 
