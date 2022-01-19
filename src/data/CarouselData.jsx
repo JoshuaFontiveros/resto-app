@@ -1,4 +1,3 @@
-import React from "react";
 export const CarouselData = [
   {
     src: "https://images4.alphacoders.com/988/thumb-1920-988128.jpg",
