@@ -1,12 +1,12 @@
 export const SidebarData = [
   {
-    id: Math.floor(Math.random() * 10000),
+    id: 1,
     title: "Home",
     path: "/",
     cName: "nav-text",
   },
   {
-    id: Math.floor(Math.random() * 10000),
+    id: 2,
     title: "All Products",
     path: "/",
     cName: "nav-text",

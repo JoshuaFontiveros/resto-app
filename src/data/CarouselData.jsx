@@ -1,6 +1,6 @@
-export const CarouselData = [
+const CarouselData = [
   {
-    id: Math.floor(Math.random() * 10000),
+    id: 1,
     src: "https://images4.alphacoders.com/988/thumb-1920-988128.jpg",
     className: "carousel-images-1",
     img_container: "img-container",
@@ -20,7 +20,7 @@ export const CarouselData = [
     caption_cName: "carousel-caption",
   },
   {
-    id: Math.floor(Math.random() * 10000),
+    id: 2,
     src: "https://images4.alphacoders.com/988/thumb-1920-988128.jpg",
     className: "carousel-images-2",
     img_container: "img-container",
@@ -40,7 +40,7 @@ export const CarouselData = [
     caption_cName: "carousel-caption",
   },
   {
-    id: Math.floor(Math.random() * 10000),
+    id: 3,
     src: "https://images4.alphacoders.com/988/thumb-1920-988128.jpg",
     className: "carousel-images-3",
     img_container: "img-container",
@@ -60,6 +60,7 @@ export const CarouselData = [
     caption_cName: "carousel-caption",
   },
   {
+    id: 4,
     src: "https://images4.alphacoders.com/988/thumb-1920-988128.jpg",
     className: "carousel-images-2",
     img_container: "img-container",
@@ -79,3 +80,5 @@ export const CarouselData = [
     caption_cName: "carousel-caption",
   },
 ];
+
+export default CarouselData;

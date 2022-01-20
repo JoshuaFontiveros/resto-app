@@ -145,8 +145,8 @@ const NavigationBar = props => {
                     </thead>
                     <tbody>
                       {cart.length > 0 && cart ? (
-                        cart.map((cartItem2, index) => (
-                          <tr key={index}>
+                        cart.map(cartItem2 => (
+                          <tr key={cartItem2?.id}>
                             <td>{cartItem2.name}</td>
                             <td>
                               <button onClick={onTriggerOrder}>+</button>
@@ -218,9 +218,9 @@ const NavigationBar = props => {
               </Link>
             </li>
 
-            {SidebarData.map((item, index) => {
+            {SidebarData.map(item => {
               return (
-                <li key={index} className={item.cName}>
+                <li key={item.id} className={item.cName}>
                   <Link to={item.path}>
                     <span>{item.title}</span>
                   </Link>

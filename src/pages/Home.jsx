@@ -7,10 +7,10 @@ import ItemSelect from "../components/ItemSelect";
 
 import NavigationBar from "../components/NavigationBar";
 import { Carousel } from "react-bootstrap";
-import { CarouselData } from "../data/CarouselData";
-import { SectionOne } from "../data/SectionOne";
-import { SectionTwo } from "../data/SectionTwo";
-import Footer from "../components/Footer";
+import CarouselData from "../data/CarouselData";
+import SectionOne from "../data/SectionOne";
+import SectionTwo from "../data/SectionTwo";
+
 import "./Home.css";
 const Home = () => {
   const itemList = useSelector(state => state.items);
@@ -84,36 +84,19 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      {/* {itemList
-        .filter(item => {
-          if (selectedCategory.includes("All")) {
-            return item;
-          }
-          return item.category === selectedCategory;
-        })
-        .map(item => {
-          return (
-            <NavigationBar
-              itemData={item}
-              triggerOrder={onAddToCart}
-              triggerEdit={onItemEdit}
-              triggerDelete={onItemDeleteInCart}
-            />
-          );
-        })} */}
-      {itemList && (
-        <NavigationBar
-          itemData={itemList}
-          triggerOrder={onAddToCart}
-          triggerEdit={onItemEdit}
-          triggerDelete={onItemDeleteInCart}
-        />
-      )}
+      <NavigationBar
+        key={itemList?.id}
+        itemData={itemList}
+        triggerOrder={onAddToCart}
+        triggerEdit={onItemEdit}
+        triggerDelete={onItemDeleteInCart}
+      />
+
       <div>
         <Carousel>
-          {CarouselData.map((item, index) => {
+          {CarouselData.map(item => {
             return (
-              <Carousel.Item key={index.id}>
+              <Carousel.Item key={item?.id}>
                 <div className={item.img_container}>
                   <img
                     className={item.className}
@@ -121,7 +104,7 @@ const Home = () => {
                     alt={item.alt}
                   />
                 </div>
-                <Carousel.Caption key={index.id} className={item.caption_cName}>
+                <Carousel.Caption className={item.caption_cName}>
                   <p className={item.p1_cName}>{item.p1}</p>
                   <h2 className={item.h2_cName}>{item.h2}</h2>
                   <h3 className={item.h3_cName}>{item.h3}</h3>
@@ -135,24 +118,24 @@ const Home = () => {
         </Carousel>
       </div>
       <div className="section-one">
-        {SectionOne.map((d, index) => {
+        {SectionOne.map(e => {
           return (
-            <>
-              <img src={d.src} alt={d.alt} className={d.imgClass} />
-              <span key={index.id} className={d.spanClass}>
-                <h2>{d.h2_data}</h2>
-                <p>{d.p_data}</p>
-                <button>{d.btn_data}</button>
+            <React.Fragment key={e?.id}>
+              <img src={e.src} alt={e.alt} className={e.imgClass} />
+              <span className={e.spanClass}>
+                <h2>{e.h2_data}</h2>
+                <p>{e.p_data}</p>
+                <button>{e.btn_data}</button>
               </span>
-            </>
+            </React.Fragment>
           );
         })}
       </div>
       <div className="section-two">
         <span className="section-2-span">
-          {SectionTwo.map((d, index) => {
+          {SectionTwo.map(d => {
             return (
-              <img key={index.id} className={d.cName} src={d.url} alt={d.alt} />
+              <img key={d?.id} className={d.cName} src={d.url} alt={d.alt} />
             );
           })}
         </span>
@@ -168,10 +151,10 @@ const Home = () => {
               }
               return item.category === selectedCategory;
             })
-            .map((item, index) => {
+            .map(item => {
               return (
                 <Item
-                  key={index.id}
+                  key={item?.id}
                   itemData={item}
                   triggerOrder={onAddToCart}
                   triggerEdit={onItemEdit}
@@ -192,9 +175,7 @@ const Home = () => {
 
         </div>
       </div> */}
-
       {/* DONT DELETE, THIS IS THE MAIN FUNCTIONALITY */}
-
       {/* <div style={{ color: "black" }}>
         {itemList
           .filter(item => {
