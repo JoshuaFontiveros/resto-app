@@ -37,7 +37,10 @@ const Item = props => {
             <span className="add-to-cart">Add To Cart</span>{" "}
             <FaIcons.FaCartPlus className="cart-plus" />
           </button>
-          <button type="button" onClick={() => onTriggerEdit(props.itemData)}>
+          <button
+            type="button"
+            // onClick={() => onTriggerEdit(props.itemData)}
+          >
             <span className="edit">Edit</span>
             <FaIcons.FaPen className="pen" />
           </button>

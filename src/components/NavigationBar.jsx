@@ -127,12 +127,13 @@ const NavigationBar = props => {
                 show={showCanvas}
                 onHide={handleCloseCanvas}
                 placement="end"
+                responsive
                 name="end">
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title>My Cart</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <Table responsive>
+                  <Table>
                     <thead>
                       <tr>
                         <th>Order</th>
