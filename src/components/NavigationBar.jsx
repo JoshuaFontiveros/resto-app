@@ -127,7 +127,6 @@ const NavigationBar = props => {
                 show={showCanvas}
                 onHide={handleCloseCanvas}
                 placement="end"
-                responsive
                 name="end">
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title>My Cart</Offcanvas.Title>
@@ -137,7 +136,7 @@ const NavigationBar = props => {
                     <thead>
                       <tr>
                         <th>Order</th>
-                        <th colspan={3} style={{ textAlign: "center" }}>
+                        <th colSpan={3} style={{ textAlign: "center" }}>
                           Qty
                         </th>
                         <th>Total</th>
@@ -169,13 +168,15 @@ const NavigationBar = props => {
                           </tr>
                         ))
                       ) : (
-                        <td colspan={4} style={{ textAlign: "center" }}>
-                          Cart Is Empty
-                        </td>
+                        <tr>
+                          <td colSpan={4} style={{ textAlign: "center" }}>
+                            Cart Is Empty
+                          </td>
+                        </tr>
                       )}
                       <tr>
                         <td></td>
-                        <td colspan={5} style={{ paddingLeft: "45px" }}>
+                        <td colSpan={5} style={{ paddingLeft: "45px" }}>
                           Grand Total: &#8369;{Math.round(subtotal * 100) / 100}
                         </td>
                       </tr>
