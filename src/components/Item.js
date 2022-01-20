@@ -8,9 +8,9 @@ const Item = props => {
     props.triggerDelete(props.itemData.id);
     handleClose();
   }
-  function onTriggerEdit() {
-    props.triggerEdit(props.itemData.id);
-  }
+  // function onTriggerEdit() {
+  //   props.triggerEdit(props.itemData.id);
+  // }
 
   function onTriggerOrder() {
     props.triggerOrder(props.itemData);

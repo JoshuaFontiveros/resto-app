@@ -83,9 +83,6 @@ const NavigationBar = props => {
   //   //   dispatch({ type: "ADD_TO_CART", payload: newAddCart });
   //   // }
   // }
-  function onTriggerOrder() {
-    props.triggerOrder(props.itemData);
-  }
 
   function onItemDeleteInCart() {
     let cartDelete = cart.filter(cartItem => itemList.id !== cartItem.id);
@@ -188,7 +185,6 @@ const NavigationBar = props => {
                   </Table>
                 </Offcanvas.Body>
               </Offcanvas>
-              {/* </OverlayTrigger> */}
             </div>
             <span>
               <MdIcons.MdBookmarkAdd
