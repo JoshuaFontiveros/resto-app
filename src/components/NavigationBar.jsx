@@ -149,7 +149,11 @@ const NavigationBar = props => {
                           <tr key={cartItem2?.id}>
                             <td>{cartItem2.name}</td>
                             <td>
-                              <button onClick={onTriggerOrder}>+</button>
+                              <button
+                              // onClick={onTriggerOrder}
+                              >
+                                +
+                              </button>
                             </td>
                             <td>{cartItem2.quantity}</td>
                             <td>
