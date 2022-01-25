@@ -28,6 +28,10 @@ const NavigationBar = (props) => {
     dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: true });
   };
 
+  const handleShowEditModal = () => {
+    dispatch({ type: "MODAL_SHOW", payload: true });
+  };
+
   const [showCanvas, setShowCanvas] = useState(false);
   const [sidebar, setSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,9 +76,10 @@ const NavigationBar = (props) => {
         item.category === updatedItem.category &&
         item.image === updatedItem.image
       ) {
-        alert(
+        alert.g(
           `Oops! You haven't changed any data, please try again to update!`
         );
+        handleShowEditModal();
       } else {
         let updatedItems = itemList.map((item) => {
           if (item.id === updatedItem.id) {
@@ -91,17 +96,11 @@ const NavigationBar = (props) => {
         cart
           .filter((cartItem) => cartItem.id === updatedItem.id)
           .map((cart) => {
-            if (cart.quantity > 1) {
+            if (cart.quantity > 0) {
               let qty = cartCounter - cart.quantity;
               dispatch({
                 type: "UPDATED_QTY_CART_COUNTER",
                 payload: qty,
-              });
-            } else {
-              let zeroQty = 0;
-              dispatch({
-                type: "UPDATED_QTY_CART_COUNTER",
-                payload: zeroQty,
               });
             }
             return cart;
@@ -117,17 +116,11 @@ const NavigationBar = (props) => {
     cart
       .filter((cartItem) => cartItem.id === id)
       .map((cart) => {
-        if (cart.quantity > 1) {
+        if (cart.quantity > 0) {
           let qty = cartCounter - cart.quantity;
           dispatch({
             type: "UPDATED_QTY_CART_COUNTER",
             payload: qty,
-          });
-        } else {
-          let zeroQty = 0;
-          dispatch({
-            type: "UPDATED_QTY_CART_COUNTER",
-            payload: zeroQty,
           });
         }
         return cart;
@@ -174,7 +167,7 @@ const NavigationBar = (props) => {
               </a>
               <div className="cart-counter-container">
                 <span className="counter">
-                  {loading && cart.length >= 1 ? counter : null}
+                  {loading && cart.length > 0 ? counter : null}
                 </span>
                 <span>
                   <FaIcons.FaCartPlus

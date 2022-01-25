@@ -39,17 +39,11 @@ const Home = (props) => {
     cart
       .filter((cartItem) => cartItem.id === id)
       .map((cart) => {
-        if (cart.quantity >= 1) {
+        if (cart.quantity > 0) {
           let qty = cartCounter - cart.quantity;
           dispatch({
             type: "UPDATED_QTY_CART_COUNTER",
             payload: qty,
-          });
-        } else {
-          let zeroQty = 0;
-          dispatch({
-            type: "UPDATED_QTY_CART_COUNTER",
-            payload: zeroQty,
           });
         }
       });
