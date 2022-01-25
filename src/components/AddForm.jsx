@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Form.css";
 import { useDispatch, useSelector } from "react-redux";
-const Form = (props) => {
+import NavigationBar from "./NavigationBar";
+const AddForm = (props) => {
   const dispatch = useDispatch();
-  const toUpdateItem = useSelector((state) => state.toUpdateItem); // eto yung lagyan ng
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("0");
+  const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Chicken");
   const [image, setImage] = useState("");
 
   const handleCloseModal = () => {
-    dispatch({ type: "MODAL_SHOW", payload: false });
+    dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: false });
   };
-
-  useEffect(() => {
-    if (toUpdateItem.id) {
-      setName(toUpdateItem.name);
-      setPrice(toUpdateItem.price);
-      setCategory(toUpdateItem.category);
-      setImage(toUpdateItem.image);
-    }
-  }, [toUpdateItem]);
 
   function clearForm() {
     setCategory("Chicken");
@@ -32,15 +23,13 @@ const Form = (props) => {
   const formSubmit = (e) => {
     e.preventDefault();
     let newItem = {
-      id: toUpdateItem.id,
+      id: Math.floor(Math.random() * 10000),
       name,
       price,
       category,
       image,
     };
-
-    console.log(newItem);
-    props.onTriggerUpdateItem(newItem);
+    props.triggerAddItem(newItem);
     clearForm();
     handleCloseModal();
   };
@@ -72,22 +61,54 @@ const Form = (props) => {
             required
           />
         </div>
-        <div className="dropdown mt-4">
-          <select
-            className="btn btn-info dropdown-toggle"
-            onChange={(data) => setCategory(data.target.value)}
-            value={category}
+        <div
+          className="d-block "
+          style={{
+            marginTop: "10px",
+            marginLeft: "0.5px",
+            width: "100%",
+            border: "1px solid #CED4DA",
+            borderRadius: "5px",
+          }}
+        >
+          <div
+            className="d-flex flex-column"
+            style={{
+              width: "100%",
+              marginTop: "20px",
+            }}
           >
-            <option value="Chicken" className="dropdown-item">
-              Chicken
-            </option>
-            <option value="Veggie" className="dropdown-item">
-              Veggie
-            </option>
-            <option value="Chickeroni" className="dropdown-item">
-              Chickeroni
-            </option>
-          </select>
+            <label
+              htmlFor="category"
+              style={{
+                marginLeft: "10px",
+                padding: 0,
+                color: "rgb(108,117,125)",
+              }}
+            >
+              Set Category for your product
+            </label>
+            <select
+              className="btn btn-info dropdown-toggle"
+              onChange={(data) => setCategory(data.target.value)}
+              value={category}
+              style={{
+                marginLeft: "10px",
+                marginBottom: "20px",
+                width: "40%",
+              }}
+            >
+              <option value="Chicken" className="dropdown-item">
+                Chicken
+              </option>
+              <option value="Veggie" className="dropdown-item">
+                Veggie
+              </option>
+              <option value="Chickeroni" className="dropdown-item">
+                Chickeroni
+              </option>
+            </select>
+          </div>
         </div>
         <div className="">
           <label htmlFor="formFile" className="form-label add-product-image">
@@ -98,7 +119,7 @@ const Form = (props) => {
             type="text"
             id="formFile"
             onChange={(data) => setImage(data.target.value)}
-            placeholder="Paste A URL"
+            placeholder="Paste an image URL"
             value={image}
             required
           />
@@ -106,8 +127,7 @@ const Form = (props) => {
         <input
           className="btn btn-primary btn-save"
           type="submit"
-          value="Update Item"
-          onClick={handleCloseModal}
+          value="Add Item"
         />
       </form>
       <button
@@ -121,4 +141,4 @@ const Form = (props) => {
   );
 };
 
-export default Form;
+export default AddForm;

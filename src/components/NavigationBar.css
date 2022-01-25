@@ -1,14 +1,31 @@
-.outline-white-2 {
-  outline: 2px solid white;
-}
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 
 @media (min-width: 375px) {
+  .grand-total {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  .grand-total > span {
+    font-family: "Open-Sans", sans-serif;
+    font-size: 18px;
+
+    width: 50%;
+  }
+
+  .numbers {
+    font-family: "Open-Sans", sans-serif;
+    font-size: 14px;
+  }
   .navbar {
     background-color: rgb(0, 0, 0);
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100vw;
   }
 
   .all-products {
@@ -21,6 +38,7 @@
     font-size: 1.7em;
     height: 35px;
     color: rgb(254, 197, 36);
+    overflow-y: hidden;
   }
 
   .cart-logo {
@@ -88,7 +106,7 @@
     justify-content: flex-start;
     align-items: center;
     padding: 8px 0px 8px 16px;
-    margin-right: 150px;
+    margin-right: 200px;
     width: 100%;
     list-style: none;
     height: 60px;
@@ -113,7 +131,7 @@
   .nav-menu-items {
     width: 100vw;
     height: 100vh;
-    position: relative;
+
     display: flex;
     flex-direction: column;
   }
@@ -132,23 +150,42 @@
   .pizza-1st-section {
     width: 100vw;
   }
+  .nav-menu-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .nav-text {
+    position: relative;
+    right: 30px;
+  }
+
+  .navbar-toggle {
+    position: relative;
+    right: 41px;
+  }
 }
 
 @media (min-width: 803px) {
+  .numbers {
+    font-family: "Open-Sans", sans-serif;
+    font-size: 18px;
+  }
   .menu-bars {
     display: none;
   }
-  .cart-logo span:nth-child(1) {
+  .cart-logo a:nth-child(1) {
     font-size: 1em;
     color: white;
     display: inherit;
     margin-top: 10px;
     margin-right: 20px;
+    text-decoration: none;
   }
   .cart-logo {
     display: flex;
     flex-direction: row;
-    /* border: 2px solid white; */
   }
   .cart-counter-container {
     position: relative;
@@ -156,5 +193,11 @@
 
   .navbar a:nth-child(2) {
     margin-left: 30px;
+  }
+}
+
+@media (min-width: 1204px) {
+  .cart-and-add-product-logo-container {
+    margin-right: 20px;
   }
 }

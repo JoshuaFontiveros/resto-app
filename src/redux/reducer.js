@@ -66,25 +66,72 @@ const initialState = {
     },
   ],
   cart: [],
+  newCartQty: [],
   total: 0,
-  toUpdateItem: null,
   item: [],
+  cartCounter: 0,
+  toUpdateItem: [],
+  show: false,
+  addProductModalShow: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case "CLEAR_TO_UPDATE_ITEM_FORM": {
+      return { ...state, toUpdateItem: action.payload };
+    }
+    case "MODAL_SHOW": {
+      return { ...state, show: action.payload };
+    }
+    case "ADD_PRODUCT_MODAL_SHOW": {
+      return { ...state, addProductModalShow: action.payload };
+    }
     case "DELETE_ITEM":
       return { ...state, items: [...action.payload] };
     case "DELETE_ITEM_IN_CART":
       return { ...state, cart: [...action.payload] };
     case "ITEM_EDIT":
-      return { ...state, items: [...state.items, action.payload] };
+      return { ...state, toUpdateItem: action.payload };
     case "UPDATED_ITEMS":
       return { ...state, items: [...action.payload] };
     case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: [...action.payload],
+      };
+    case "CHANGE_QUANTITY":
+      let changedItem = action.payload;
+      let currentCart = state.cart.slice(0);
+      let updatedCart = currentCart.map((item) => {
+        if (item.id === changedItem.id) {
+          if (changedItem.operation === 1) {
+            item.quantity += 1;
+          } else if (changedItem.operation === -1 && item.quantity > 1) {
+            item.quantity -= 1;
+          }
+        }
+        return item;
+      });
+      let total = state.cart.reduce((accumulator, item) => {
+        return accumulator + item.quantity * item.price;
+      }, 0);
+      return { ...state, cart: updatedCart, totalPrice: total };
+
+    case "UPDATED_CART":
       return { ...state, cart: [...action.payload] };
+    case "ADD_QTY":
+      return { ...state, cartCounter: action.payload };
+    case "DEDUCT_QTY":
+      return { ...state, cartCounter: action.payload };
+    case "UPDATED_QTY_CART_COUNTER": {
+      return { ...state, cartCounter: action.payload };
+    }
     case "TOTAL":
       return { ...state, total: action.payload };
+
+    case "NEW_CART_QTY": {
+      return { ...state, newCartQty: action.payload };
+    }
     default:
       return state;
   }

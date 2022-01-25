@@ -9,35 +9,55 @@ import { SidebarData } from "../data/SidebarData";
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Modal, Offcanvas } from "react-bootstrap";
 import Form from "./Form";
+import AddForm from "./AddForm";
 
-const NavigationBar = props => {
+const NavigationBar = (props) => {
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
+  const show2 = useSelector((state) => state.show);
+  const addProductModalShow = useSelector((state) => state.addProductModalShow);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    dispatch({ type: "MODAL_SHOW", payload: false });
+  };
+
+  const handleCloseAddProduct = () => {
+    dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: false });
+  };
+
+  const handleShowAddProduct = () => {
+    dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: true });
+  };
 
   const [showCanvas, setShowCanvas] = useState(false);
+  const [sidebar, setSideBar] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [subtotal, setSubTotal] = useState(0);
+  const [counter, setCounter] = useState(0);
+
   const handleCloseCanvas = () => setShowCanvas(false);
   const handleShowCanvas = () => setShowCanvas(true);
 
-  const [sidebar, setSideBar] = useState(false);
-
-  const [subtotal, setSubTotal] = useState(0);
-
   // states from our reducer
-  const itemList = useSelector(state => state.items);
-  const cart = useSelector(state => state.cart);
-  // const total = useSelector(state => state.total);
+
+  const itemList = useSelector((state) => state.items);
+  const cart = useSelector((state) => state.cart);
+  const cartCounter = useSelector((state) => state.cartCounter);
 
   useEffect(() => {
     let subtotalHolder = 0;
-    cart.map(
-      cartSubtotal =>
-        (subtotalHolder += cartSubtotal.quantity * cartSubtotal.price)
-    );
-    setSubTotal(subtotalHolder);
-  }, [cart]);
+    if (cart && cartCounter) {
+      cart.map(
+        (cartSubtotal) =>
+          (subtotalHolder += cartSubtotal.quantity * cartSubtotal.price)
+      );
+      let counterHolder = 0;
+      counterHolder += cartCounter;
+      setLoading(true);
+      setCounter(counterHolder);
+      setSubTotal(subtotalHolder);
+    }
+  }, [cart, cartCounter]);
+
   /* add new product */
   function addNewProduct(item) {
     let addedProduct = [...itemList, item];
@@ -45,50 +65,92 @@ const NavigationBar = props => {
   }
 
   function triggerUpdateItem(updatedItem) {
-    let updatedItems = itemList.map(item => {
-      if (item.id === updatedItem.id) {
-        item = { ...updatedItem };
+    let itemFiltered = itemList.map((item) => {
+      if (
+        item.id === updatedItem.id &&
+        item.name === updatedItem.name &&
+        item.price === updatedItem.price &&
+        item.category === updatedItem.category &&
+        item.image === updatedItem.image
+      ) {
+        alert(
+          `Oops! You haven't changed any data, please try again to update!`
+        );
+      } else {
+        let updatedItems = itemList.map((item) => {
+          if (item.id === updatedItem.id) {
+            let newUpdatedItem = updatedItem;
+            item = { ...newUpdatedItem };
+          }
+          return item;
+        });
+        dispatch({ type: "UPDATED_ITEMS", payload: updatedItems });
+        let cartDelete = cart.filter(
+          (cartItem) => updatedItem.id !== cartItem.id
+        );
+        dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
+        cart
+          .filter((cartItem) => cartItem.id === updatedItem.id)
+          .map((cart) => {
+            if (cart.quantity > 1) {
+              let qty = cartCounter - cart.quantity;
+              dispatch({
+                type: "UPDATED_QTY_CART_COUNTER",
+                payload: qty,
+              });
+            } else {
+              let zeroQty = 0;
+              dispatch({
+                type: "UPDATED_QTY_CART_COUNTER",
+                payload: zeroQty,
+              });
+            }
+            return cart;
+          });
       }
-      return item;
+      return itemFiltered;
+    });
+  }
+
+  function onItemDeleteInCart(id) {
+    let cartDelete = cart.filter((cartItem) => id !== cartItem.id);
+    dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
+    cart
+      .filter((cartItem) => cartItem.id === id)
+      .map((cart) => {
+        if (cart.quantity > 1) {
+          let qty = cartCounter - cart.quantity;
+          dispatch({
+            type: "UPDATED_QTY_CART_COUNTER",
+            payload: qty,
+          });
+        } else {
+          let zeroQty = 0;
+          dispatch({
+            type: "UPDATED_QTY_CART_COUNTER",
+            payload: zeroQty,
+          });
+        }
+        return cart;
+      });
+  }
+
+  const changeQuantityHandler = (id, operation) => {
+    dispatch({
+      type: "CHANGE_QUANTITY",
+      payload: { id: id, operation: operation },
     });
 
-    dispatch({ type: "UPDATED_ITEMS", payload: updatedItems });
-    // // setItems(updatedItems);
-    // dispatch({ type: "ITEM_EDIT", payload: null });
-
-    // setToUpdateItemState(null);
-    // setToUpdateItem(null);
-  }
-
-  // function addAnotherOneItem(cartItem2) {
-  //   alert(`You have added to cart: ${cartItem2.name}`);
-  //   /* Logic
-  //     1. Check if item exist
-  //       - if it does, increase quantity
-  //       - add item to cart with quantity = 1
-  //   */
-  //   // if (cart.find(cartItem2 => cartItem2.id === cartItem.id)) {
-  //   //   // increase quantity
-  //   //   let updatedCart = cart.map(cartItem2 => {
-  //   //     if (cartItem2.id === cartItem.id) {
-  //   //       cartItem2.quantity += 1;
-  //   //     }
-  //   //     return cartItem2;
-  //   //   });
-  //   //   // setCart(updatedCart);
-  //   //   dispatch({ type: "ADD_TO_CART", payload: updatedCart });
-  //   // } else {
-  //   //   // add item to cart
-  //   //   let newAddCart = [...cart, { ...cartItem, quantity: 1 }];
-  //   //   dispatch({ type: "ADD_TO_CART", payload: newAddCart });
-  //   // }
-  // }
-
-  function onItemDeleteInCart() {
-    let cartDelete = cart.filter(cartItem => itemList.id !== cartItem.id);
-    // setCart(cartUpdate);
-    dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
-  }
+    let qtyCounter = cartCounter;
+    if (operation === 1) {
+      qtyCounter = cartCounter + 1;
+      dispatch({ type: "ADD_QTY", payload: qtyCounter });
+    }
+    if (operation === -1) {
+      qtyCounter = cartCounter - 1;
+      dispatch({ type: "DEDUCT_QTY", payload: qtyCounter });
+    }
+  };
 
   /* Showing sidebar */
   function showSideBar() {
@@ -98,21 +160,23 @@ const NavigationBar = props => {
   return (
     <React.Fragment>
       <IconContext.Provider value={{ color: "#fff" }}>
-        <div className="navbar">
+        <div
+          className="navbar"
+          style={{ position: "fixed", top: 0, zIndex: 999 }}
+        >
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSideBar} />
           </Link>
           <Link to="/">Restaurant App</Link>
-
           <div className="cart-and-add-product-logo-container">
             <div className="cart-logo ">
-              {/* <span>Home</span> */}
-              <span className="all-products">All Products</span>
+              <a className="all-products" href="#products" rel="noreferrer">
+                All Products
+              </a>
               <div className="cart-counter-container">
                 <span className="counter">
-                  {cart.length > 0 ? cart.length : null}
+                  {loading && cart.length >= 1 ? counter : null}
                 </span>
-
                 <span>
                   <FaIcons.FaCartPlus
                     className="cart"
@@ -124,93 +188,148 @@ const NavigationBar = props => {
                 show={showCanvas}
                 onHide={handleCloseCanvas}
                 placement="end"
-                name="end">
+                name="end"
+              >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title>My Cart</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <Table>
-                    <thead>
-                      <tr>
-                        <th>Order</th>
-                        <th colSpan={3} style={{ textAlign: "center" }}>
-                          Qty
-                        </th>
-                        <th>Total</th>
-                        <th>Remove</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cart.length > 0 && cart ? (
-                        cart.map(cartItem2 => (
-                          <tr key={cartItem2?.id}>
-                            <td>{cartItem2.name}</td>
-                            <td>
-                              <button
-                              // onClick={onTriggerOrder}
-                              >
-                                +
-                              </button>
-                            </td>
-                            <td>{cartItem2.quantity}</td>
-                            <td>
-                              <button onClick={onItemDeleteInCart}>-</button>
-                            </td>
-                            <td width="50%">
-                              &#8369;{cartItem2.price * cartItem2.quantity}
-                            </td>
-                            <td style={{ textAlign: "center" }}>
-                              <IconContext.Provider value={{ color: "red" }}>
-                                <FaIcons.FaTrashAlt
-                                  onClick={onItemDeleteInCart}
-                                />
-                              </IconContext.Provider>
+                  {loading && cart.length > 0 ? (
+                    <>
+                      <Table responsive>
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th colSpan={3} style={{ textAlign: "center" }}>
+                              Qty
+                            </th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cart && cart.length > 0
+                            ? cart.map((cartItem2) => (
+                                <tr key={cartItem2?.id}>
+                                  <td>{cartItem2.name}</td>
+                                  <td>
+                                    {cart.id !== cartItem2.id &&
+                                    cartItem2.quantity <= 1 ? (
+                                      <FaIcons.FaMinus
+                                        disabled
+                                        style={{ color: "gray", width: "12px" }}
+                                      />
+                                    ) : (
+                                      <FaIcons.FaMinus
+                                        style={{
+                                          color: "black",
+                                          width: "12px",
+                                        }}
+                                        onClick={() =>
+                                          changeQuantityHandler(
+                                            cartItem2.id,
+                                            -1
+                                          )
+                                        }
+                                      />
+                                    )}
+                                  </td>
+                                  <td>{cartItem2.quantity}</td>
+                                  <td>
+                                    <FaIcons.FaPlus
+                                      style={{
+                                        color: "rgb(0,0,0)",
+                                        width: "12px",
+                                      }}
+                                      onClick={() =>
+                                        changeQuantityHandler(cartItem2.id, 1)
+                                      }
+                                    />
+                                  </td>
+                                  <td className="numbers">
+                                    &#8369;{cartItem2.price}
+                                  </td>
+                                  <td className="numbers">
+                                    &#8369;
+                                    {Math.round(
+                                      cartItem2.price * cartItem2.quantity * 100
+                                    ) / 100}
+                                  </td>
+                                  <td style={{ textAlign: "center" }}>
+                                    <IconContext.Provider
+                                      value={{ color: "red" }}
+                                    >
+                                      <FaIcons.FaTrashAlt
+                                        onClick={() =>
+                                          onItemDeleteInCart(cartItem2.id)
+                                        }
+                                      />
+                                    </IconContext.Provider>
+                                  </td>
+                                </tr>
+                              ))
+                            : ""}
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td
+                              className="numbers"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              &#8369;
+                              {Math.round(subtotal * 100) / 100}
                             </td>
                           </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={4} style={{ textAlign: "center" }}>
-                            Cart Is Empty
-                          </td>
-                        </tr>
-                      )}
-                      <tr>
-                        <td></td>
-                        <td colSpan={5} style={{ paddingLeft: "45px" }}>
-                          Grand Total: &#8369;{Math.round(subtotal * 100) / 100}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                        </tbody>
+                      </Table>
+                    </>
+                  ) : (
+                    `Your Cart Is Empty. Addu to cart now!`
+                  )}
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
             <span>
               <MdIcons.MdBookmarkAdd
                 className="add-product"
-                onClick={handleShow}
+                onClick={handleShowAddProduct}
               />
             </span>
           </div>
         </div>
 
-        {/* Modal of add product */}
-
-        <Modal show={show} onHide={handleClose}>
+        {/* Modal of Edit Product */}
+        <Modal
+          show={show2}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          style={{ zIndex: 1050 }}
+        >
+          <Modal.Header>Product Information</Modal.Header>
           <Modal.Body>
-            <Form
-              // toUpdateId={toUpdateItem?.id}
-              // itemName={toUpdateItem?.name}
-              // itemPrice={toUpdateItem?.price}
-              // itemCategory={toUpdateItem?.category}
-              // itemImage={toUpdateItem?.image}
-              triggerAddItem={addNewProduct}
-              onTriggerUpdateItem={triggerUpdateItem}
-            />
+            <Form onTriggerUpdateItem={triggerUpdateItem} />
+            <FaIcons.FaTimes />
+          </Modal.Body>
+        </Modal>
+        {/* End of modal of edit product */}
+
+        {/* Modal of Add Product */}
+        <Modal show={addProductModalShow} onHide={handleCloseAddProduct}>
+          <Modal.Header>Add Product</Modal.Header>
+
+          <Modal.Body>
+            <AddForm triggerAddItem={addNewProduct} />
+
+            <FaIcons.FaTimes />
           </Modal.Body>
         </Modal>
         {/* End of modal of add product */}
+
         {/* Mobile nav-data */}
         <nav className={sidebar ? "nav-menu active " : "nav-menu "}>
           <ul className="nav-menu-items " onClick={showSideBar}>
@@ -219,13 +338,12 @@ const NavigationBar = props => {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-
-            {SidebarData.map(item => {
+            {SidebarData.map((item) => {
               return (
                 <li key={item.id} className={item.cName}>
-                  <Link to={item.path}>
-                    <span>{item.title}</span>
-                  </Link>
+                  <a href={item.path} rel="noreferrer">
+                    <span className="">{item.title}</span>
+                  </a>
                 </li>
               );
             })}
