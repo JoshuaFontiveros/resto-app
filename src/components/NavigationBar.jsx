@@ -76,7 +76,7 @@ const NavigationBar = (props) => {
         item.category === updatedItem.category &&
         item.image === updatedItem.image
       ) {
-        alert.g(
+        alert(
           `Oops! You haven't changed any data, please try again to update!`
         );
         handleShowEditModal();
