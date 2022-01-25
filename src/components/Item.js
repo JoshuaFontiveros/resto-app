@@ -16,7 +16,6 @@ const Item = (props) => {
   const handleShowModal = () => {
     dispatch({ type: "MODAL_SHOW", payload: true });
   };
-
   function onTriggerDelete() {
     props.triggerDelete(props.itemData.id);
     handleClose();

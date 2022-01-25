@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Item from "../components/Item";
 import ItemSelect from "../components/ItemSelect";
 import NavigationBar from "../components/NavigationBar";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Alert } from "react-bootstrap";
 import CarouselData from "../data/CarouselData";
 import SectionOne from "../data/SectionOne";
 import SectionTwo from "../data/SectionTwo";
@@ -16,19 +16,26 @@ const Home = (props) => {
   const cartCounter = useSelector((state) => state.cartCounter);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const dispatch = useDispatch();
+  const showAlert = useState(true);
 
   useEffect(() => {
+    // if (itemList) {
+    //   setLoading(true);
+    // }
     let subtotal = 0;
     cart.map((cartItem) => (subtotal += cartItem.quantity * cartItem.price));
+    // setTotal(subtotal);
     dispatch({ type: "TOTAL", payload: subtotal });
   }, [cart, dispatch]);
 
   function onItemDelete(id) {
     let deleteItems = itemList.filter((d) => id !== d.id);
+    // setItems(deleteItems);
     dispatch({ type: "DELETE_ITEM", payload: deleteItems });
 
     let cartDelete = cart.filter((cartItem) => id !== cartItem.id);
     dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
+
     cart
       .filter((cartItem) => cartItem.id === id)
       .map((cart) => {
@@ -45,7 +52,6 @@ const Home = (props) => {
             payload: zeroQty,
           });
         }
-        return cart;
       });
   }
 
@@ -61,6 +67,7 @@ const Home = (props) => {
         - add item to cart with quantity = 1  
     */
     let cartQty = cartCounter + 1;
+
     if (cart.find((cartItem) => cartItem.id === item.id)) {
       // increase quantity
       let updatedCart = cart.map((cartItem) => {
@@ -166,3 +173,97 @@ const Home = (props) => {
   );
 };
 export default Home;
+
+// class App extends Component {
+//   constructor(props){
+//     super(props);
+
+//     this.state = {
+//       items: [
+//         {
+//           id: 1,
+//           name: "Burger",
+//           price: 50,
+//           category: "Food",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046784.svg"
+//         },
+//         {
+//           id: 2,
+//           name: "Pizza",
+//           price: 100,
+//           category: "Food",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046771.svg"
+//         },
+//         {
+//           id: 3,
+//           name: "Fries",
+//           price: 25,
+//           category: "Food",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046786.svg"
+//         },
+//         {
+//           id: 4,
+//           name: "Coffee",
+//           price: 35,
+//           category: "Drink",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046785.svg"
+//         },
+//         {
+//           id: 5,
+//           name: "Iced Tea",
+//           price: 45,
+//           category: "Drink",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046782.svg"
+//         },
+//         {
+//           id: 6,
+//           name: "Hot Tea",
+//           price: 45,
+//           category: "Drink",
+//           image: "https://image.flaticon.com/icons/svg/1046/1046792.svg"
+//         }
+//       ]
+//     };
+//   }
+
+//   onItemDelete( id ){
+//     console.log(`Delete item with ID: ${id}`);
+//   }
+
+//   onItemEdit( id ){
+//     console.log(`Edit item with ID: ${id}`);
+//   }
+
+//   onAddToCart( id ){
+//     console.log(`Item with ID: ${id} added to cart`);
+//   }
+
+//   render() {
+//     return (
+//       <div className="main-main-container d-flex flex-column justify-content-center align-items-center">
+//         <div className="main-container d-flex flex-column justify-content-start align-items-center">
+//           <div className="title-and-choose-category-container d-flex flex-column align-items-center w-100">
+//             <h2>Restaurant App</h2>
+//             <div class="dropdown">
+//               <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" d-bs-toggle="dropdown" aria-expanded="false"> Select Category</a>
+//               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+//                 <li><a class="dropdown-item" href="#">Action</a></li>
+//                 <li><a class="dropdown-item" href="#">Another action</a></li>
+//                 <li><a class="dropdown-item" href="#">Something else here</a></li>
+//               </ul>
+//             </div>
+//         </div>
+//           <div className="items-container d-flex flex-row flex-wrap justify-content-center align-items-center">
+
+//             {
+//               this.state.items.map( item => {
+//                 return( <Item itemData = {item
+//                 } triggerOrder={ this.onAddToCart } triggerEdit={ this.onItemEdit } triggerDelete={ this.onItemDelete } key={item.id} /> )
+//               })
+//             }
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }

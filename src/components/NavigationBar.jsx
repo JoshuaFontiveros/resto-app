@@ -65,9 +65,8 @@ const NavigationBar = (props) => {
   }
 
   function triggerUpdateItem(updatedItem) {
-    let itemFiltered = itemList.map((item) => {
+    let itemFiltered = itemList.filter((item) => {
       if (
-        item.id === updatedItem.id &&
         item.name === updatedItem.name &&
         item.price === updatedItem.price &&
         item.category === updatedItem.category &&
@@ -108,7 +107,7 @@ const NavigationBar = (props) => {
             return cart;
           });
       }
-      return itemFiltered;
+      return item;
     });
   }
 

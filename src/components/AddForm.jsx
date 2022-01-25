@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Form.css";
 import { useDispatch, useSelector } from "react-redux";
 import NavigationBar from "./NavigationBar";
@@ -109,6 +109,7 @@ const AddForm = (props) => {
               </option>
             </select>
           </div>
+          {/* <div className="dropdown mt-4 " style={{ width: "50%" }}></div> */}
         </div>
         <div className="">
           <label htmlFor="formFile" className="form-label add-product-image">
