@@ -39,8 +39,6 @@ const Form = (props) => {
       category,
       image,
     };
-
-    console.log(updatedItem);
     props.onTriggerUpdateItem(updatedItem);
     clearForm();
     handleCloseModal();
@@ -48,14 +46,6 @@ const Form = (props) => {
 
   return (
     <>
-      {/* <div style={{ display: "none" }}>
-        <NavigationBar
-          name={setName}
-          price={setPrice}
-          category={setCategory}
-          image={setImage}
-        /> */}
-
       {
         <form onSubmit={formSubmit}>
           <div className="">
