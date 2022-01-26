@@ -79,32 +79,35 @@ const NavigationBar = (props) => {
         alert(
           `Oops! You haven't changed any data, please try again to update!`
         );
-        handleShowEditModal();
       } else {
-        let updatedItems = itemList.map((item) => {
-          if (item.id === updatedItem.id) {
-            let newUpdatedItem = updatedItem;
-            item = { ...newUpdatedItem };
-          }
-          return item;
-        });
-        dispatch({ type: "UPDATED_ITEMS", payload: updatedItems });
-        let cartDelete = cart.filter(
-          (cartItem) => updatedItem.id !== cartItem.id
-        );
-        dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
-        cart
-          .filter((cartItem) => cartItem.id === updatedItem.id)
-          .map((cart) => {
-            if (cart.quantity > 0) {
-              let qty = cartCounter - cart.quantity;
-              dispatch({
-                type: "UPDATED_QTY_CART_COUNTER",
-                payload: qty,
-              });
+        if (item.id !== updatedItem.id) {
+          return null;
+        } else {
+          let updatedItems = itemList.map((item) => {
+            if (item.id === updatedItem.id) {
+              let newUpdatedItem = updatedItem;
+              item = { ...newUpdatedItem };
             }
-            return cart;
+            return item;
           });
+          dispatch({ type: "UPDATED_ITEMS", payload: updatedItems });
+          let cartDelete = cart.filter(
+            (cartItem) => updatedItem.id !== cartItem.id
+          );
+          dispatch({ type: "DELETE_ITEM_IN_CART", payload: cartDelete });
+          cart
+            .filter((cartItem) => cartItem.id === updatedItem.id)
+            .map((cart) => {
+              if (cart.quantity > 0) {
+                let qty = cartCounter - cart.quantity;
+                dispatch({
+                  type: "UPDATED_QTY_CART_COUNTER",
+                  payload: qty,
+                });
+              }
+              return cart;
+            });
+        }
       }
       return item;
     });
