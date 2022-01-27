@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Item from "../components/Item";
 import ItemSelect from "../components/ItemSelect";
 import NavigationBar from "../components/NavigationBar";
-import { Carousel, Alert } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import CarouselData from "../data/CarouselData";
 import SectionOne from "../data/SectionOne";
 import SectionTwo from "../data/SectionTwo";
@@ -16,7 +16,6 @@ const Home = (props) => {
   const cartCounter = useSelector((state) => state.cartCounter);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const dispatch = useDispatch();
-  const showAlert = useState(true);
 
   useEffect(() => {
     // if (itemList) {
@@ -46,6 +45,7 @@ const Home = (props) => {
             payload: qty,
           });
         }
+        return cart;
       });
   }
 
@@ -138,30 +138,36 @@ const Home = (props) => {
           })}
         </span>
       </div>
+
       <div className="products-section ">
         <h2 id="products">Our Pizzas</h2>
         <ItemSelect selectCategory={setSelectedCategory} />
-        <div className="card-main-container">
-          {itemList
-            .filter((item) => {
-              if (selectedCategory.includes("All")) {
-                return item;
-              }
-              return item.category === selectedCategory;
-            })
-            .map((item) => {
-              return (
-                <Item
-                  key={item?.id}
-                  itemData={item}
-                  triggerOrder={onAddToCart}
-                  triggerEdit={onItemEdit}
-                  triggerDelete={onItemDelete}
-                />
-              );
-            })}
-        </div>
+        {itemList.length > 0 ? (
+          <div className="card-main-container">
+            {itemList
+              .filter((item) => {
+                if (selectedCategory.includes("All") || item.length > 0) {
+                  return item;
+                }
+                return item.category === selectedCategory;
+              })
+              .map((item) => {
+                return (
+                  <Item
+                    key={item?.id}
+                    itemData={item}
+                    triggerOrder={onAddToCart}
+                    triggerEdit={onItemEdit}
+                    triggerDelete={onItemDelete}
+                  />
+                );
+              })}
+          </div>
+        ) : (
+          `You have no products to display`
+        )}
       </div>
+
       <Footer />
     </React.Fragment>
   );

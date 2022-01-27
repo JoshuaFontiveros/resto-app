@@ -28,10 +28,6 @@ const NavigationBar = (props) => {
     dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: true });
   };
 
-  const handleShowEditModal = () => {
-    dispatch({ type: "MODAL_SHOW", payload: true });
-  };
-
   const [showCanvas, setShowCanvas] = useState(false);
   const [sidebar, setSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,12 +60,22 @@ const NavigationBar = (props) => {
 
   /* add new product */
   function addNewProduct(item) {
-    let addedProduct = [...itemList, item];
-    dispatch({ type: "UPDATED_ITEMS", payload: addedProduct });
+    if (
+      itemList.findIndex(
+        (items) => items.name.toLowerCase() === item.name.toLowerCase()
+      ) >= 0
+    ) {
+      alert(
+        `You've already added a product with a name of ${item.name}. Please try again.`
+      );
+    } else {
+      let addedProduct = [...itemList, item];
+      dispatch({ type: "UPDATED_ITEMS", payload: addedProduct });
+    }
   }
 
   function triggerUpdateItem(updatedItem) {
-    let itemFiltered = itemList.filter((item) => {
+    itemList.filter((item) => {
       if (
         item.name === updatedItem.name &&
         item.price === updatedItem.price &&

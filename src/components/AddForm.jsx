@@ -8,6 +8,7 @@ const AddForm = (props) => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Chicken");
   const [image, setImage] = useState("");
+  const items = useSelector((state) => state.items);
 
   const handleCloseModal = () => {
     dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: false });
@@ -29,6 +30,7 @@ const AddForm = (props) => {
       category,
       image,
     };
+
     props.triggerAddItem(newItem);
     clearForm();
     handleCloseModal();
