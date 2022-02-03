@@ -18,9 +18,9 @@ I have also added a lot of validations in this app. For example:
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+**Client:** React, Redux, React-Bootstrap
 
-**Server:** Node, Express
+**Server:** N/A
 
 ## Run Locally
 
