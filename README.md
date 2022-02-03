@@ -1,6 +1,6 @@
 
 # Restaurant App
-This app is a simple restaurant app made from ReactJS, React-Redux and a little bit of React-Bootstrap.
+This app is a simple restaurant app made using JavaScript.
 The features of this app are the following:
 * It allows you to add new product
 * Edit your current product
@@ -15,6 +15,12 @@ I have also added a lot of validations in this app. For example:
 * If you click edit button and then click the update button without changing anything, it will alert you that you didn't changed anything.
 * If you try to edit a product that is already in cart and you clicked save without changing anything, it will alert you that you didn't changed anything. Please try again.
 * If you try to edit a product that is already in cart and you did some changes and clicked save, it will be deleted in your cart and the product will be updated.
+
+## Tech Stack
+
+**Client:** React, Redux, TailwindCSS
+
+**Server:** Node, Express
 
 ## Run Locally
 
