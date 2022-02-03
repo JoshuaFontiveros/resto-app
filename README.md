@@ -8,7 +8,10 @@ The features of this app are the following:
 * Add product in your cart
 * Increase quantity in your cart
 * Delete product in your cart.
+
+
 I have also added a lot of validations in this app. For example:
+
 
 * You can't add the same product name regardless if it's uppercase or lowercase.
 * If product was deleted, it should also be deleted in your cart.
