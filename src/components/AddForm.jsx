@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Form.css";
-import { useDispatch, useSelector } from "react-redux";
-import NavigationBar from "./NavigationBar";
+import { useDispatch } from "react-redux";
+
 const AddForm = (props) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Chicken");
   const [image, setImage] = useState("");
-  const items = useSelector((state) => state.items);
 
   const handleCloseModal = () => {
     dispatch({ type: "ADD_PRODUCT_MODAL_SHOW", payload: false });
@@ -111,7 +110,6 @@ const AddForm = (props) => {
               </option>
             </select>
           </div>
-          {/* <div className="dropdown mt-4 " style={{ width: "50%" }}></div> */}
         </div>
         <div className="">
           <label htmlFor="formFile" className="form-label add-product-image">
@@ -127,11 +125,7 @@ const AddForm = (props) => {
             required
           />
         </div>
-        <input
-          className="btn btn-primary btn-save"
-          type="submit"
-          value="Add Item"
-        />
+        <input className="btn btn-primary btn-save" type="submit" value="Add Item" />
       </form>
       <button
         className="btn btn-danger btn-save"

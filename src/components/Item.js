@@ -54,15 +54,9 @@ const Item = (props) => {
     <React.Fragment>
       <div className="products-container ">
         <div className="card-img">
-          <img
-            src={props.itemData.image}
-            alt="Pizza Flavors"
-            className="prod-img"
-          />
+          <img src={props.itemData.image} alt="Pizza Flavors" className="prod-img" />
           <span>{props.itemData.name}</span>
-          <span style={{ fontFamily: "sans-serif" }}>
-            &#8369;{props.itemData.price}
-          </span>
+          <span style={{ fontFamily: "sans-serif" }}>&#8369;{props.itemData.price}</span>
           <span className="prod-btn-container">
             <button onClick={onTriggerOrder}>
               <span className="add-to-cart">Add To Cart</span>{" "}
@@ -82,8 +76,7 @@ const Item = (props) => {
         <Modal show={show} onHide={handleClose} centered>
           <Modal.Header>
             <Modal.Title className="modal-title" style={{ fontSize: "0.9em" }}>
-              Do you want to delete{" "}
-              <strong>{props.itemData.name}? This cannot be undone.</strong>
+              Do you want to delete <strong>{props.itemData.name}? This cannot be undone.</strong>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="modal-body">
@@ -109,9 +102,9 @@ const Item = (props) => {
             <div className="warning-text">
               {" "}
               <strong style={{ textTransform: "uppercase", color: "red" }}>
-                You already have this item in your cart, updating this item also
-                means it will be deleted in your cart. You may add this again in
-                your cart once updated. Would you like to proceed?
+                You already have this item in your cart, updating this item also means it will be
+                deleted in your cart. You may add this again in your cart once updated. Would you
+                like to proceed?
               </strong>
               <div className="warning-btn-container">
                 <button onClick={handleCloseWarning} className="warning-yes">
